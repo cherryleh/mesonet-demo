@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>leaflet-map-csv</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+
+  <!-- Load Leaflet code library - see updates at http://leafletjs.com/download.html -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+  <!-- Load jQuery and PapaParse to read data from a CSV file -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
+
+  <!-- Position the map with Cascading Style Sheet (CSS) -->
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      height: 75%;
+      width: 50%;
+      align-items: center;
+    }
+  </style>
+
+
+
+</head>
+
+<body>
+
+  <div id="map"></div>
+
+  <script>
+    var map = L.map('map', {
+      center: [20.389, -157.52275766141424],
+      zoom: 7
+    });
+
+    // Add the basemap
+    var basemap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community',
+      minZoom: 0,
+      maxZoom: 18
+    });
+    basemap.addTo(map);
+
+    $.get('/data/station_metadata.csv', function (csvString) {
+
+      // Use PapaParse to convert string to array of objects
+      var data = Papa.parse(csvString, { header: true, dynamicTyping: true }).data;
+
+      // For each row in data, create a marker and add it to the map
+      // For each row, columns `Latitude`, `Longitude`, and `Title` are required
+      for (var i in data) {
+        var row = data[i];
+        var url = 'station.html?id=0' + row.id;
+        var marker = L.circleMarker([row.lat, row.lng], {
+            color: "white",
+            fillColor: "blue",
+            fillOpacity: 0.5,
+            radius: 8,
+        }).bindPopup('<a href="'+ url +'" style="font-size: 20px" target="_blank">' + row.name + '</a>');
+
+
+        marker.addTo(map);
+      }
+
+    });
+
+    // Update map attribution
+    map.attributionControl.setPrefix(
+      'View <a href="https://github.com/HandsOnDataViz/leaflet-map-csv" target="_blank">code on GitHub</a>'
+    );
+
+
+  </script>
+</body>
+
+</html>

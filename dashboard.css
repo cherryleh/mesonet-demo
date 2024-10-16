@@ -1,0 +1,136 @@
+.parent {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    height: 70%;
+    /* Full height */
+    width: 100%;
+
+    gap: 1%;
+}
+
+.parent div[class^="div"] {
+    border: 1px solid black;
+    padding: 5%;
+}
+
+.dashboard-title{
+    text-align: center;
+}
+
+.value{
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    margin-top: 7%;
+    margin-bottom: 7%;
+}
+
+.value p:last-child {
+    font-size: 1.4vw;
+    line-height: 1; /* Set line height to avoid extra space */
+    margin: 0;      /* Remove any default margin */
+    vertical-align: bottom; /* Align second p to the bottom */
+}
+
+.subvalue{
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    font-size: 0.9em;
+}
+
+.value p:first-of-type {
+    font-size: 2.5vw;
+    line-height: 1;
+}
+
+.div1 {
+    grid-area: 1 / 9 / 5 / 11;
+}
+
+.div2 {
+    grid-area: 1 / 11 / 5 / 13;
+}
+
+.div3 {
+    grid-area: 5 / 9 / 9 / 11;
+}
+
+.div4 {
+    grid-area: 5 / 11 / 9 / 13;
+}
+
+.div5 {
+    grid-area: 9 / 9 / 13 / 11;
+}
+
+.div6 {
+    grid-area: 9 / 11 / 13 / 13;
+}
+
+.div7 {
+    grid-area: 1 / 1 / 7 / 9;
+}
+
+.div8 {
+    grid-area: 7 / 1 / 13 / 9;
+}
+
+.div1,
+.div2,
+.div3,
+.div4,
+.div5,
+.div6 {
+    border-radius: 5%;
+}
+
+.div7,
+.div8 {
+    border-radius: 2%;
+}
+
+
+
+/* Progress bar */
+.progress-box {
+    width: 150px;               /* Set width of the box */
+    height: 150px;              /* Set height of the box */
+    border: 1px solid #ccc;     /* Optional: Border around the box */
+    display: flex;              /* Center the progress bar horizontally and vertically */
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;  /* Optional: Light background color */
+}
+
+/* Container for the custom progress bar */
+.progress-container {
+    width:90%;              /* Set width of the progress bar */
+    height: 20px;              /* Set height of the progress bar */
+    background-color: #D9D9D9; /* Color of the empty part */
+    position: relative;
+    border: 1px solid #ccc;    /* Optional: Border around the bar */
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* The actual progress fill */
+.progress-bar {
+    height: 100%;               
+    background-color: #4caf50;   
+    width: 0%;                  
+    transition: width 0.3s ease; 
+}
+
+#progressValue {
+    font-size: 14px;           
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.progress-bar-max{
+    font-size: 0.8vw;
+    text-align: right;
+}

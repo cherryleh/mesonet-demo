@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two Highcharts Example</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+</head>
+
+<body>
+    <p>Station ID: <span id="displayId"></span></p>
+    <div class="select">
+        <select id="timeframe" class="dropdown">
+            <option value="1" selected>Last 1 Hour</option>
+            <option value="6">Last 6 Hours</option>
+            <option value="12">Last 12 Hours</option>
+            <option value="24">Last 24 Hours</option>
+            <option value="168">Last 7 Days</option>
+        </select>
+    </div>
+
+    <div class="select">
+        <select id="" class="dropdown">
+            <option value="1" selected>Rainfall+Temperature</option>
+            <option value="6">Last 6 Hours</option>
+            <option value="12">Last 12 Hours</option>
+            <option value="24">Last 24 Hours</option>
+            <option value="168">Last 7 Days</option>
+        </select>
+    </div>
+
+    <div class="select">
+        <select id="timeframe" class="dropdown">
+            <option value="1" selected>Last 1 Hour</option>
+            <option value="6">Last 6 Hours</option>
+            <option value="12">Last 12 Hours</option>
+            <option value="24">Last 24 Hours</option>
+            <option value="168">Last 7 Days</option>
+        </select>
+    </div>
+
+    <br>
+    <br>
+    <div id="latest-graph"></div>
+</body>
+<style>
+
+    :root {
+      --select-border: #777;
+      --select-focus: blue;
+      --select-arrow: var(--select-border);
+    }
+
+    select {
+      appearance: none;
+      background-color: transparent;
+      border: none;
+      padding: 0 1em 0 0;
+      margin: 0;
+      width: 100%;
+      font-family: "Gill Sans", sans-serif;
+      font-size: inherit;
+      cursor: inherit;
+      line-height: inherit;
+
+      z-index: 1;
+
+      &::-ms-expand {
+        display: none;
+      }
+    }
+
+    .select {
+      display: grid;
+      grid-template-areas: "select";
+      align-items: center;
+      position: relative;
+
+      select,
+      &::after {
+        grid-area: select;
+      }
+
+      min-width: 15ch;
+      max-width: 20ch;
+
+      border: 1px solid var(--select-border);
+      border-radius: 0.25em;
+      padding: 0.25em 0.5em;
+
+      font-size: 1.25rem;
+      cursor: pointer;
+      line-height: 1.1;
+
+      
+      background-color: #fff;
+      background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+
+     
+      &:not(.select--multiple)::after {
+        content: "";
+        justify-self: end;
+        width: 0.8em;
+        height: 0.5em;
+        background-color: var(--select-arrow);
+        clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+      }
+    }
+
+    select:focus + .focus {
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      right: -1px;
+      bottom: -1px;
+      border: 2px solid var(--select-focus);
+      border-radius: inherit;
+    }
+
+    select[multiple] {
+      padding-right: 0;
+
+      /*
+       * Safari will not reveal an option
+       * unless the select height has room to 
+       * show all of it
+       * Firefox and Chrome allow showing 
+       * a partial option
+       */
+      height: 6rem;
+
+      option {
+        white-space: normal;
+        outline-color: var(--select-focus);
+      }
+
+    }
+
+    .select--disabled {
+      cursor: not-allowed;
+      background-color: #eee;
+      background-image: linear-gradient(to top, #ddd, #eee 33%);
+    }
+
+    label {
+      font-size: 1.125rem;
+      font-weight: 500;
+    }
+
+    .select + label {
+      margin-top: 2rem;
+    }
+</style>
+
+</html>
+
+
+<script src="data.js"> </script>
+
+</html>

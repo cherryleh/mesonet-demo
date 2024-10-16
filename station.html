@@ -1,0 +1,194 @@
+<header>
+    <link rel="stylesheet" type="text/css" href="tabs.css">
+    <link rel="stylesheet" type="text/css" href="dashboard.css">
+    <link rel="stylesheet" type="text/css" href="station_info.css">
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+</header>
+
+<body>
+    <div class="tabs">
+        <input type="radio" id="tab1" name="tab-control" checked>
+        <input type="radio" id="tab2" name="tab-control">
+        <input type="radio" id="tab3" name="tab-control">
+        <input type="radio" id="tab4" name="tab-control">
+        <ul>
+            <li title="Dashboard"><label for="tab1" role="button">
+                    <br><span>Dashboard</span></label></li>
+            <li title="Graphs"><label for="tab2" role="button">
+                    <br><span>Graphs</span></label></li>
+            <li title="Climatology"><label for="tab3" role="button">
+                    <br><span>Climatology</span></label></li>
+            <li title="StationInfo"><label for="tab4" role="button">
+                    <br><span>Station Info</span></label></li>
+        </ul>
+
+        <div class="slider">
+            <div class="indicator"></div>
+        </div>
+        <div class="content">
+            <section>
+                <div class="station-name">Nu&#699;uanu Res No. 1</div>
+                <p style="text-align: right;font-style: italic;"> Last updated: 10:00 AM</p>
+                <div class="parent">
+                    <div class="div1">
+                        <p class="dashboard-title">Hourly Rainfall</p>
+                        <div class="value">
+                            <p id="rain1h"></p>&nbsp;
+                            <p>in</p>
+                        </div>
+                        <div class="subvalue">
+                            <p>24-hour: </p>&nbsp;
+                            <p id="rain24h"></p>&nbsp;
+                            <p>in</p>
+                        </div>
+                        <div class="subvalue">
+                            <p>7-day:</p>&nbsp;
+                            <p id="rain7d"></p>&nbsp;
+                            <p>in</p>
+                        </div>
+                    </div>
+                    <div class="div2">
+                        <p class="dashboard-title">Air Temperature</p>
+                        <div class="value">
+                            <p id="airTemp"></p>&nbsp;
+                            <p>&deg;F</p>
+                        </div>
+                    </div>
+                    <div class="div3">
+                        <p class="dashboard-title">Wind</p>
+                        <div class="value">
+                            <p id="wind"></p>&nbsp;
+                            <p> m&sup3/m&sup3</p>
+                        </div>
+                        <div class="subvalue">
+                            <p id="windDir" style="text-align: center;"></p>
+                        </div>
+                        <!-- <div class="value">
+                            <p id="wind"></p>&nbsp;
+                            <p>mph</p>
+                        </div>
+                        <div class="subvalue">
+                            <div id="windDir"></div>
+                        </div> -->
+                    </div>
+                    <div class="div4">
+                        <p class="dashboard-title">Soil Moisture</p>
+                        <div class="value">
+                            <p id="sm"></p>&nbsp;
+                            <p> m&sup3/m&sup3</p>
+                        </div>
+                        <div class="subvalue">
+                            <p>10 cm depth</p>
+                        </div>
+                    </div>
+                    <div class="div5">
+                        <p class="dashboard-title">Relative Humidity</p>
+                        <div class="value">
+                            <p id="humidity"></p>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" id="humProgressBar"></div>
+                        </div>
+                        <p class="progress-bar-max">Max: 100</p>
+                    </div>
+                    <div class="div6">
+                        <p class="dashboard-title">Solar Radiation</p>
+                        <div class="value">
+                            <p id="rad"></p>&nbsp;
+                            <p> W/m&sup2</p>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" id="solarProgressBar"></div>
+                        </div>
+                        <p class="progress-bar-max">Max: 1200</p>
+                    </div>
+                    <div class="div7"></div>
+                    <div class="div8"></div>
+                </div>
+
+
+
+            </section>
+            <section>
+                <h2>Graphing</h2>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem quas adipisci a accusantium eius ut
+                voluptatibus ad impedit nulla, ipsa qui. Quasi temporibus eos commodi aliquid impedit amet, similique
+                nulla.
+            </section>
+            <section>
+                <h2>Climatology</h2>
+                <select id="unitDropdown">
+                    <option value="english" selected>English</option>
+                    <option value="metric">Metric</option>
+                </select>
+                <div id="climatology"></div>
+
+            </section>
+            <section>
+                <div class="station-name">Nu&#699;uanu Res No. 1</div>
+                <br>
+                <div class="container">
+                    <div class="left">
+                        <div id="map" style="width: 90%; height: 100%; margin-left: auto; margin-right: auto;"></div>
+                    </div>
+                    <div class="right">
+                        <div class="station-parent">
+                            <div class="station-div1">
+                                <p>Elevation</p>
+                                <p>384 ft.</p>
+                            </div>
+                            <div class="station-div2">
+                                <p>Lat/Lon</p>
+                                <p>21.33910/-157.83690</p>
+                            </div>
+                            <div class="station-div3">
+                                <p>Start Observation Date</p>
+                                <p></p>
+                            </div>
+                            <div class="station-div4">
+                                <p>Station Status</p>
+                                <p>Active</p>
+                            </div>
+                        </div>
+                        <img style="width: 70%;display: block;
+                        margin-left: auto;
+                        margin-right: auto;" src="https://www.hawaii.edu/climate-data-portal/wp-content/uploads/2023/06/Nu%CA%BBuanu-Res.-No.-1-scaled.jpeg">
+                    </div>
+                </div>
+                <!-- <div id="map" style="width: 40%; aspect-ratio: 1 / 1;"></div> -->
+
+                <!-- <div class="split left">
+                    <div class="centered">
+                    </div>
+                  </div>
+  
+                  <div class="split right">
+                    <div class="centered">
+                    </div>
+                  </div> -->
+
+            </section>
+        </div>
+    </div>
+    <script>
+        // const queryString = window.location.search;
+
+        // const urlParams = new URLSearchParams(queryString);
+
+        // const id = urlParams.get('id');
+    </script>
+    <script src="climate.js"> </script>
+    <script src="dashboard.js"> </script>
+    <script src="station_info_map.js"></script>
+
+</body>
