@@ -40,8 +40,8 @@ function processCSV(data) {
 
     // Display the results in the respective divs
     document.getElementById('airTemp').innerText = `${tempValue.toFixed(2)}`;
-    document.getElementById('humidity').innerText = `${humidityValue.toFixed(2)}%`;
-    document.getElementById('wind').innerText = `${windValue.toFixed(2)}`;
+    document.getElementById('humidity').innerText = `${Math.round(humidityValue)}%`;
+    document.getElementById('wind').innerText = `${Math.round(windValue)}`;
     document.getElementById('sm').innerText = `${smValue.toFixed(2)}`;
     document.getElementById('rad').innerText = `${Math.round(radValue)}`;
 

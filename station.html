@@ -69,7 +69,7 @@
                         <p class="dashboard-title">Wind</p>
                         <div class="value">
                             <p id="wind"></p>&nbsp;
-                            <p> m&sup3/m&sup3</p>
+                            <p> mph</p>
                         </div>
                         <div class="subvalue">
                             <p id="windDir" style="text-align: center;"></p>
@@ -125,37 +125,116 @@
 
             </section>
             <section>
-                <label for="timeRange">Time Range:</label>
-                <select id="timeRange">
-                    <option value="24h">Last 24 Hours</option>
-                    <option value="7d">Last 7 Days</option>
-                </select>
+                <div class="form-container">
+                    <div class="form-group">
+                        <label for="timeRange">Time Range:</label>
+                        <select id="timeRange">
+                            <option value="24h">Last 24 Hours</option>
+                            <option value="7d">Last 7 Days</option>
+                        </select>
+                    </div>
 
-                <label for="variable">Variable:</label>
-                <select id="variable">
-                    <option value="temp">Temperature</option>
-                    <option value="rf">Rainfall</option>
-                    <option value="rf+t">Rainfall + Temperature</option>
-                    <option value="rh">Relative Humidity</option>
-                    <option value="sm">Soil Moisture</option>
-                </select>
+                    <div class="form-group">
+                        <label for="variable">Variable:</label>
+                        <select id="variable">
+                            <option value="temp">Temperature</option>
+                            <option value="rf">Rainfall</option>
+                            <option value="rf+t">Rainfall + Temperature</option>
+                            <option value="rh">Relative Humidity</option>
+                            <option value="sm">Soil Moisture</option>
+                        </select>
+                    </div>
 
-                <label for="unit">Unit:</label>
-                <select id="unit">
-                    <option value="english">English</option>
-                    <option value="metric">Metric</option>
-                </select>
+                    <div class="form-group">
+                        <label for="unit">Unit:</label>
+                        <select id="unit">
+                            <option value="english">English</option>
+                            <option value="metric">Metric</option>
+                        </select>
+                    </div>
 
-                <button onclick="updateChart()">Update Chart</button>
-                  <div id="container"></div>
+                    <!-- Button to the right -->
+                    <div class="form-group">
+                        <button onclick="updateChart()">Update Chart</button>
+                    </div>
+                </div>
+                <div id="container"></div>
+
+                <style>
+                    .form-container {
+                        display: flex;
+                        gap: 1.5rem;
+                        align-items: flex-end;
+                        justify-content: space-between;
+                        width: 50%
+                    }
+
+                    .form-group {
+                        display: flex;
+                        flex-direction: column;
+                        min-width: 150px;
+                    }
+
+                    .form-group label {
+                        font-weight: 500;
+                        color: #333;
+                        font-size: 0.8vw;
+                    }
+
+                    .form-group select {
+                        padding: 2px;
+                        border: 1px solid #ccc;
+                        font-size: 0.8vw;
+                        background-color: #F8F8F8;
+                        color: #333;
+                        transition: all 0.3s ease;
+                    }
+
+                    .form-group select:hover, .form-group select:focus {
+                        background-color: #fff;
+                        box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+                        outline: none;
+                    }
+
+                    .form-group button {
+                        padding: 2px 16px;
+                        font-size: 0.8vw;
+                        border: 1px solid 	#ccc;
+                        cursor: pointer;
+                        transition: background-color 0.3s ease;
+                        background-color: #F8F8F8;
+                    }
+
+                    .form-group button:hover {
+                        background-color: #DCDCDC;
+                    }
+
+                    /* Responsive adjustments */
+                    @media (max-width: 768px) {
+                        .form-container {
+                            flex-direction: column;
+                            align-items: flex-start;
+                        }
+
+                        .form-group {
+                            width: 100%;
+                        }
+                    }
+                </style>
+
+                
+                  
   
             </section>
             <section>
                 <h2>Climatology</h2>
-                <select id="unitDropdown">
-                    <option value="english" selected>English</option>
-                    <option value="metric">Metric</option>
-                </select>
+                <div class="form-group">
+                    <label for="unit">Unit:</label>
+                    <select id="unitDropdown" style="width: 10%">
+                        <option value="english" selected>English</option>
+                        <option value="metric">Metric</option>
+                    </select>
+                </div>
                 <div id="climatology"></div>
 
             </section>

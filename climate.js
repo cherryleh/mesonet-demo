@@ -1,5 +1,5 @@
 let currentData = 'english';
-//let chart;
+let chart2;
 
 fetch('./data/0502_climate.csv') // Update with your CSV file path
     .then(response => response.text())
@@ -28,7 +28,7 @@ fetch('./data/0502_climate.csv') // Update with your CSV file path
                 [tmean_c, tmin_c, tmax_c, rf_mm] : 
                 [tmean_f, tmin_f, tmax_f, rf_in];
 
-            chart = Highcharts.chart('climatology', {
+            chart2 = Highcharts.chart('climatology', {
                 chart: {
                     type: 'line'
                 },
