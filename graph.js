@@ -92,16 +92,14 @@ function updateChart() {
     } else if (variable === 'rf'){
         let seriesData = filteredData.map(row => [new Date(row.timestamp).getTime(), row[variable]]);
         series = [{
-            name: variable === variable === 'rf' ? 'Rainfall',
+            name: 'Rainfall',
             type:'column',
             data: seriesData
         }];
 
         yAxisConfig = [{
             title: {
-                text: variable === 'rf' ? (unit === 'metric' ? 'Rainfall (mm)' : 'Rainfall (in)') :
-                    variable === 'temp' ? (unit === 'metric' ? 'Temperature (°C)' : 'Temperature (°F)') :
-                    variable === 'rh' ? 'Relative Humidity' : 'Soil Moisture'
+                text: unit === 'metric' ? 'Rainfall (mm)' : 'Rainfall (in)'
             }
         }];
     } else {
