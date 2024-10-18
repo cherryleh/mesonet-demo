@@ -2,6 +2,7 @@
     <link rel="stylesheet" type="text/css" href="tabs.css">
     <link rel="stylesheet" type="text/css" href="dashboard.css">
     <link rel="stylesheet" type="text/css" href="station_info.css">
+    
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
@@ -9,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-
+    
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
@@ -112,18 +113,42 @@
                         </div>
                         <p class="progress-bar-max">Max: 1200</p>
                     </div>
-                    <div class="div7"></div>
-                    <div class="div8"></div>
+                    <div class="div7">
+                        <div id="container24h"></div>
+                    </div>
+                    <div class="div8">
+                        <div id="container7days"></div>
+                    </div>
                 </div>
 
 
 
             </section>
             <section>
-                <h2>Graphing</h2>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem quas adipisci a accusantium eius ut
-                voluptatibus ad impedit nulla, ipsa qui. Quasi temporibus eos commodi aliquid impedit amet, similique
-                nulla.
+                <label for="timeRange">Time Range:</label>
+                <select id="timeRange">
+                    <option value="24h">Last 24 Hours</option>
+                    <option value="7d">Last 7 Days</option>
+                </select>
+
+                <label for="variable">Variable:</label>
+                <select id="variable">
+                    <option value="rf">Rainfall</option>
+                    <option value="temp">Temperature</option>
+                    <option value="rf+t">Rainfall + Temperature</option>
+                    <option value="rh">Relative Humidity</option>
+                    <option value="sm">Soil Moisture</option>
+                </select>
+
+                <label for="unit">Unit:</label>
+                <select id="unit">
+                    <option value="english">English</option>
+                    <option value="metric">Metric</option>
+                </select>
+
+                <button onclick="updateChart()">Update Chart</button>
+                  <div id="container"></div>
+  
             </section>
             <section>
                 <h2>Climatology</h2>
@@ -165,30 +190,22 @@
                         margin-right: auto;" src="https://www.hawaii.edu/climate-data-portal/wp-content/uploads/2023/06/Nu%CA%BBuanu-Res.-No.-1-scaled.jpeg">
                     </div>
                 </div>
-                <!-- <div id="map" style="width: 40%; aspect-ratio: 1 / 1;"></div> -->
-
-                <!-- <div class="split left">
-                    <div class="centered">
-                    </div>
-                  </div>
-  
-                  <div class="split right">
-                    <div class="centered">
-                    </div>
-                  </div> -->
-
             </section>
         </div>
     </div>
     <script>
-        // const queryString = window.location.search;
+        const queryString = window.location.search;
 
-        // const urlParams = new URLSearchParams(queryString);
+        const urlParams = new URLSearchParams(queryString);
 
-        // const id = urlParams.get('id');
+        const id = urlParams.get('id');
     </script>
-    <script src="climate.js"> </script>
+    
     <script src="dashboard.js"> </script>
+    <script src="dashboard-charts.js"></script>
+    <script src="graph.js"> </script>
+    <script src="climate.js"> </script>
     <script src="station_info_map.js"></script>
+    
 
 </body>

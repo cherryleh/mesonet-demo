@@ -1,20 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <title>Leaflet Map</title>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
+    <title>Dynamic Highcharts Example with CSV Data</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script> <!-- PapaParse library -->
+    <style>
+        #container {
+            height: 400px;
+            min-width: 310px;
+        }
+    </style>
 </head>
-
 <body>
-    <div id="map" style="height: 500px;"></div>
+    <h1>Dynamic Highcharts Example with CSV Data</h1>
+    
+    <label for="timeRange">Time Range:</label>
+    <select id="timeRange">
+        <option value="24h">Last 24 Hours</option>
+        <option value="7d">Last 7 Days</option>
+    </select>
 
-    <script src="station_info_map.js"></script>
+    <label for="variable">Variable:</label>
+    <select id="variable">
+        <option value="rf">Rainfall</option>
+        <option value="temp">Temperature</option>
+        <option value="rf+t">Rainfall + Temperature</option>
+        <option value="rh">Relative Humidity</option>
+        <option value="sm">Soil Moisture</option>
+    </select>
+
+    <label for="unit">Unit:</label>
+    <select id="unit">
+        <option value="english">English</option>
+        <option value="metric">Metric</option>
+    </select>
+
+    <button onclick="updateChart()">Update Chart</button>
+    
+    <div id="container"></div>
+
+    <script>
+        
+    </script>
 </body>
-
 </html>

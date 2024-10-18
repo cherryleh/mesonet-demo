@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    var id = '0502';
+    //var id = '0502';
     var map = L.map('map', {
         center: [20.389, -157.52275766141424],
         zoom: 7
@@ -35,11 +35,6 @@ document.addEventListener("DOMContentLoaded", function () {
       
 
     function addMarker(lat, lon, name) {
-        var markerOptions = {
-            color: "red",
-            //fillOpacity: 0.5,
-            //radius: 8
-        };
         L.marker([lat,lon], {icon: greenIcon}).bindPopup(name).addTo(map);
     }
 
