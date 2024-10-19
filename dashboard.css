@@ -91,6 +91,7 @@
 .div6 {
     border-radius: 5%;
     padding: 5%;
+    display: grid;
 }
 
 .div7,

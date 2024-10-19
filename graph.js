@@ -1,7 +1,7 @@
 let chart;
 let rawData = [];
 function loadCSV() {
-    Papa.parse("./data/0502_data.csv", {
+    Papa.parse("./data/0502_data_hourly.csv", {
         download: true,
         header: true,
         complete: function (results) {
