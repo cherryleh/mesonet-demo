@@ -8,6 +8,7 @@ fetch('./data/0502_data.csv')
         render24hChart(last24hData);
         console.log(last24hData)
         render7dChart(last7DaysHourlyData);
+        console.log(last7DaysHourlyData)
     });
 
 function parseCSV(data) {
@@ -21,6 +22,7 @@ function parseCSV(data) {
         const dateIndex = headers.indexOf('Date');
         const tempIndex = headers.indexOf('Tair_1_Avg_f');
         const rainIndex = headers.indexOf('RF_1_Tot_in');
+        const radIndex = headers.indexOf('SWin_1_Avg');
 
         if (dateIndex !== -1 && tempIndex !== -1) {
             // Parse the date and keep it in the provided timezone (which should be -10:00 for HST)
@@ -29,7 +31,8 @@ function parseCSV(data) {
 
             const tempValue = parseFloat(columns[tempIndex]);
             const rainValue = rainIndex !== -1 ? parseFloat(columns[rainIndex]) : null;
-            result.push({ datetime, tempValue, rainValue });
+            const radValue = parseFloat(columns[radIndex]);
+            result.push({ datetime, tempValue, rainValue, radValue });
         }
     }
 
@@ -52,20 +55,30 @@ function filterLast7Days(data) {
         if (entry.datetime >= sevenDaysAgo && entry.datetime <= mostRecent) {
             const hour = new Date(entry.datetime).setMinutes(0, 0, 0); // Round to hour
             if (!hourlyData[hour]) {
-                hourlyData[hour] = { tempSum: 0, rainTotal: 0, count: 0 };
+                hourlyData[hour] = { tempSum: 0, rainTotal: 0, radSum: 0, count: 0 };
             }
             hourlyData[hour].tempSum += entry.tempValue;
+            hourlyData[hour].radSum += entry.radValue;
             if (entry.rainValue !== null) {
-                hourlyData[hour].rainTotal += entry.rainValue; // Sum rainfall
+                hourlyData[hour].rainTotal += entry.rainValue;
             }
             hourlyData[hour].count += 1;
         }
     });
 
+    console.log(hourlyData)
+
+    // console.log(Object.keys(hourlyData).map(hour => ({
+    //     datetime: new Date(parseInt(hour)),
+    //     avgTemp: hourlyData[hour].tempSum / hourlyData[hour].count,
+    //     avgRad: hourlyData[hour].radSum / hourlyData[hour].count
+    // })))
+    
     return Object.keys(hourlyData).map(hour => ({
         datetime: new Date(parseInt(hour)),
-        avgTemp: hourlyData[hour].tempSum / hourlyData[hour].count, // Average temperature
-        totalRain: hourlyData[hour].rainTotal // Total rainfall
+        avgTemp: hourlyData[hour].tempSum / hourlyData[hour].count,
+        avgRad: hourlyData[hour].radSum / hourlyData[hour].count,
+        totalRain: hourlyData[hour].rainTotal,
     }));
 }
 
@@ -112,14 +125,14 @@ function render24hChart(data) {
             data: data.map(entry => [entry.datetime.getTime(), entry.tempValue]),
             marker: { enabled: false },
             zIndex: 2,
-            color: '#ED561B'
+            color: '#FC7753'
         }, {
             name: 'Rainfall',
             type: 'column',
             data: data.map(entry => [entry.datetime.getTime(), entry.rainValue]),
             yAxis: 1,
             zIndex: 1,
-            color: '#058DC7'
+            color: '#17BEBB'
         }]
     });
 }
@@ -153,10 +166,17 @@ function render7dChart(data) {
         xAxis: { type: 'datetime' },
         yAxis: [{ // First yAxis for temperature
             title: { text: 'Temperature (&deg;F)' }
-        }, { // Secondary yAxis for rainfall
+        }, {
             title: { text: 'Rainfall (in)' },
             opposite: true
-        }],
+        },
+        {
+            title: { text: 'Solar Radiation (W/m&sup2)' },
+            opposite: true,
+            min:0,
+            max:1200
+        }
+        ],
         tooltip: {
             shared: true,
             valueDecimals: 2 // This will show only two decimal places in tooltips
@@ -166,7 +186,7 @@ function render7dChart(data) {
             data: data.map(entry => [entry.datetime.getTime(), entry.avgTemp]),
             marker: { enabled: false },
             zIndex: 2,
-            color: '#ED561B'
+            color: '#FC7753'
 
         }, {
             name: 'Rainfall',
@@ -174,8 +194,16 @@ function render7dChart(data) {
             data: data.map(entry => [entry.datetime.getTime(), entry.totalRain]),
             yAxis: 1,
             zIndex: 1,
-            color: '#058DC7'
+            color: '#17BEBB'
+        }, {
+            name: 'Solar Radiation',
+            data: data.map(entry => [entry.datetime.getTime(), entry.avgRad]),
+            yAxis: 2,
+            zIndex: 1,
+            color: '#FFC914'
         }
         ]
+        
     });
+    ///console.log(data.map(entry => [entry.datetime.getTime(), entry.avgRad]))
 }

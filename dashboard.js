@@ -42,7 +42,7 @@ function processCSV(data) {
     document.getElementById('airTemp').innerText = `${tempValue.toFixed(2)}`;
     document.getElementById('humidity').innerText = `${Math.round(humidityValue)}%`;
     document.getElementById('wind').innerText = `${Math.round(windValue)}`;
-    document.getElementById('sm').innerText = `${smValue.toFixed(2)}`;
+    document.getElementById('sm').innerText = `${Math.round(smValue*100)}`;
     document.getElementById('rad').innerText = `${Math.round(radValue)}`;
 
     updateSolarProgress(radValue);

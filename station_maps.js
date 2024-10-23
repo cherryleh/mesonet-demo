@@ -39,3 +39,33 @@
         'View <a href="https://github.com/HandsOnDataViz/leaflet-map-csv" target="_blank">code on GitHub</a>'
     );
 
+    var islands = L.geoJSON(coastline, {
+        color:'none',
+    }
+    );
+    
+    selectbox = document.getElementById('zoombox');
+
+    var featuremap = {};
+    
+    
+    
+    for (var i = 0; i < coastline['features'].length; i++) {
+        feature = coastline['features'][i];
+        featuremap[feature['properties']['isle']] = feature['properties'];
+    
+    }
+    
+    function zoomToIsl() {
+        key = selectbox.value;
+        obj = featuremap[key];
+        isl = obj[Object.keys(obj)[0]];
+        if (isl == 'Hawaii') {
+            map.setView([obj['lat'], obj['lon']], 9);
+        } else if (isl == 'Lanai') {
+            map.setView([obj['lat'], obj['lon']], 11);
+        } else {
+            map.setView([obj['lat'], obj['lon']], 10);
+        }
+                
+    }

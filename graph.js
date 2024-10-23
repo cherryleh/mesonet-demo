@@ -68,7 +68,7 @@ function updateChart() {
         rf: unit === 'metric' ? row.rf * 25.4 : row.rf,
         temp: unit === 'metric' ? (row.temp - 32) * 5 / 9 : row.temp,
         rh: row.rh,
-        sm: row.sm
+        sm: row.sm*100
     }));
 
     console.log("Filtered Data:", filteredData); // Debugging output
@@ -108,10 +108,44 @@ function updateChart() {
         ];
 
         tooltip = [
-            { 
+            {
                 shared: true
-             }];
+            }];
 
+    } else if (variable === 'rf+sm') {
+        let seriesData1 = filteredData.map(row => [new Date(row.timestamp).getTime(), row['rf']]);
+        let seriesData2 = filteredData.map(row => [new Date(row.timestamp).getTime(), row['sm']]);
+
+        series = [
+            {
+                name: 'Rainfall',
+                data: seriesData1.length ? seriesData1 : [[latestTimestamp, null]],
+                yAxis: 0,
+                color: '#058DC7',
+                tooltip: {
+                    valueSuffix: unit === 'metric' ? 'mm' : 'in'
+                }
+            },
+            {
+                name: 'Soil Moisture',
+                data: seriesData2.length ? seriesData2 : [[latestTimestamp, null]],
+                yAxis: 1,
+                color: '#ED561B',
+                tooltip: {
+                    valueSuffix: '%'
+                }
+            }
+        ];
+
+        yAxisConfig = [
+            { title: { text: unit === 'metric' ? 'Rainfall (mm)' : 'Rainfall (in)' } },
+            { title: {text: 'Soil Moisture (%)'}, opposite: true }
+        ];
+
+        tooltip = [
+            {
+                shared: true
+            }];
     } else if (variable === 'rf') {
         let seriesData = filteredData.map(row => [new Date(row.timestamp).getTime(), row[variable]]);
         series = [{

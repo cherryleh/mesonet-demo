@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function addCircleMarker(lat, lon, name) {
         var circleMarkerOptions = {
             color: "white",
-            fillColor: "green",
+            fillColor: "red",
             fillOpacity: 0.5,
             radius: 8
         };
