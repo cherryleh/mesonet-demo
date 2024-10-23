@@ -12,7 +12,6 @@ function loadCSV() {
                 rh: parseFloat(row['RH_1_Avg']),
                 sm: parseFloat(row['SM_1_Avg'])
             }));
-            console.log("CSV Data Loaded:", rawData); // For debugging
             updateChart();
         }
     });
@@ -22,12 +21,16 @@ function initializeChart(series, yAxisConfig) {
     chart = Highcharts.chart('container', {
         chart: {
             zoomType: 'x',
+            marginTop: 50,
         },
         title: {
             text: ''
         },
         xAxis: {
-            type: 'datetime'
+            type: 'datetime',
+            // dateTimeLabelFormats: {
+            //     hour: '%Y-%m-%d %H:00',
+            // }
         },
         yAxis: yAxisConfig,
         series: series,
@@ -40,6 +43,7 @@ function initializeChart(series, yAxisConfig) {
         },
         tooltip: {
             valueDecimals: 2,
+            xDateFormat: '%Y-%m-%d %H:%M'
         }
     });
 }
@@ -56,8 +60,7 @@ function updateChart() {
 
     // Find the latest timestamp in the dataset
     const latestTimestamp = Math.max(...rawData.map(row => new Date(row.timestamp).getTime()));
-    console.log("Latest timestamp:", new Date(latestTimestamp)); // Debugging output
-
+    
     // Filter data based on the selected time range
     let filteredData = filterDataByRange(rawData, range, latestTimestamp);
 
@@ -71,7 +74,6 @@ function updateChart() {
         sm: row.sm*100
     }));
 
-    console.log("Filtered Data:", filteredData); // Debugging output
     // Prepare series and yAxis configuration based on the selected variable
     let series = [];
     let yAxisConfig = [];

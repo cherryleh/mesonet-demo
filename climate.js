@@ -30,7 +30,8 @@ fetch('./data/0502_climate.csv') // Update with your CSV file path
 
             chart2 = Highcharts.chart('climatology', {
                 chart: {
-                    type: 'line'
+                    type: 'line',
+                    marginTop: 50
                 },
                 title: {
                     text: ''

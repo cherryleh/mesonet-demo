@@ -42,7 +42,7 @@ function processCSV(data) {
     document.getElementById('airTemp').innerText = `${tempValue.toFixed(2)}`;
     document.getElementById('humidity').innerText = `${Math.round(humidityValue)}%`;
     document.getElementById('wind').innerText = `${Math.round(windValue)}`;
-    document.getElementById('sm').innerText = `${Math.round(smValue*100)}`;
+    document.getElementById('sm').innerText = `${Math.round(smValue*100)}%`;
     document.getElementById('rad').innerText = `${Math.round(radValue)}`;
 
     updateSolarProgress(radValue);
@@ -121,10 +121,6 @@ let latestTimestamp = null;
         }
     }
 
-    // Log the totals
-    console.log(`Total for the last 1 hour: ${rain.oneH.toFixed(2)}`);
-    console.log(`Total for the last 24 hours: ${rain.twentyFourH.toFixed(2)}`);
-    console.log(`Total for the last 7 days: ${rain.sevenD.toFixed(2)}`);
 
     document.getElementById('rain1h').innerText = `${rain.oneH.toFixed(2)}`;
     document.getElementById('rain24h').innerText = `${rain.twentyFourH.toFixed(2)} `;
@@ -172,8 +168,5 @@ function degreesToCompass(degrees) {
     const index = Math.floor((degrees + 11.25) / 22.5) % 16;
 
     direction = directions[index];
-    // Return the corresponding compass direction
-    //return directions[index];
-    //console.log(direction);
     document.getElementById('windDir').innerText = `Winds from ${direction}`;
 }

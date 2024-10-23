@@ -1,9 +1,14 @@
 <header>
     <link rel="stylesheet" type="text/css" href="tabs.css">
     <link rel="stylesheet" type="text/css" href="dashboard.css">
+    <link rel="stylesheet" type="text/css" href="graphs.css">
     <link rel="stylesheet" type="text/css" href="station_info.css">
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,12 +22,12 @@
 </header>
 
 <body>
-    <div class="tabs">
+    <div class="site-tabs" >
         <input type="radio" id="tab1" name="tab-control" checked>
         <input type="radio" id="tab2" name="tab-control">
         <input type="radio" id="tab3" name="tab-control">
         <input type="radio" id="tab4" name="tab-control">
-        <ul>
+        <ul class="site-menu">
             <li title="Dashboard"><label for="tab1" role="button">
                     <br><span>Dashboard</span></label></li>
             <li title="Graphs"><label for="tab2" role="button">
@@ -31,28 +36,29 @@
                     <br><span>Climatology</span></label></li>
             <li title="StationInfo"><label for="tab4" role="button">
                     <br><span>Station Info</span></label></li>
-        </ul>
+            </ul>
 
         <div class="slider">
             <div class="indicator"></div>
+            
         </div>
-        <div class="content">
+        <div class="content" >
             <section>
                 <div class="station-name">Nu&#699;uanu Res No. 1</div>
                 <p style="text-align: right;font-style: italic;"> Last updated: 10:00 AM</p>
-                <div class="parent">
+                <div class="parent" >
                     <div class="div1">
                         <p class="dashboard-title">Hourly Rainfall</p>
                         <div class="value">
                             <p id="rain1h"></p>&nbsp;
                             <p>in</p>
                         </div>
-                        <div class="subvalue">
+                        <div class="center subvalue">
                             <p>24-hour: </p>&nbsp;
                             <p id="rain24h"></p>&nbsp;
                             <p>in</p>
                         </div>
-                        <div class="subvalue">
+                        <div class="center subvalue">
                             <p>7-day:</p>&nbsp;
                             <p id="rain7d"></p>&nbsp;
                             <p>in</p>
@@ -64,6 +70,10 @@
                             <p id="airTemp"></p>&nbsp;
                             <p>&deg;F</p>
                         </div>
+                        <div class="subvalue">
+                            <p>&nbsp;&nbsp;</p>
+                            <p>&nbsp;&nbsp;</p>
+                        </div>
                     </div>
                     <div class="div3">
                         <p class="dashboard-title">Wind</p>
@@ -71,8 +81,8 @@
                             <p id="wind"></p>&nbsp;
                             <p> mph</p>
                         </div>
-                        <div class="subvalue">
-                            <p id="windDir" style="text-align: center;"></p>
+                        <div class="subvalue center">
+                            <p id="windDir"></p>
                         </div>
                         <!-- <div class="value">
                             <p id="wind"></p>&nbsp;
@@ -86,9 +96,8 @@
                         <p class="dashboard-title">Soil Moisture</p>
                         <div class="value">
                             <p id="sm"></p>&nbsp;
-                            <p>%</p>
                         </div>
-                        <div class="subvalue">
+                        <div class="center subvalue">
                             <p>3.1-inch depth</p>
                         </div>
                     </div>
@@ -125,6 +134,7 @@
 
             </section>
             <section>
+                <div  style="">
                 <div class="form-container">
                     <div class="form-group">
                         <label for="timeRange">Time Range:</label>
@@ -160,6 +170,7 @@
                     </div>
                 </div><br>
                 <div id="container"></div>
+                </div>
 
                 <style>
                     .form-container {
@@ -179,13 +190,13 @@
                     .form-group label {
                         font-weight: 500;
                         color: #333;
-                        font-size: 1vw;
+                        font-size: 2vh;
                     }
 
                     .form-group select {
                         padding: 2px;
                         border: 1px solid #ccc;
-                        font-size: 0.8vw;
+                        font-size: 2vh;
                         background-color: #F8F8F8;
                         color: #333;
                         transition: all 0.3s ease;
@@ -211,7 +222,6 @@
                         background-color: #DCDCDC;
                     }
 
-                    /* Responsive adjustments */
                     @media (max-width: 768px) {
                         .form-container {
                             flex-direction: column;
@@ -245,7 +255,7 @@
                 <br>
                 <div class="container">
                     <div class="left">
-                        <div id="map" style="width: 90%; height: 100%; margin-left: auto; margin-right: auto;"></div>
+                        <div id="map" style="width: 90%; height: 70%; margin-left: auto; margin-right: auto;"></div>
                     </div>
                     <div class="right">
                         <div class="station-parent">

@@ -6,9 +6,7 @@ fetch('./data/0502_data.csv')
         const last7DaysHourlyData = filterLast7Days(parsedData);
 
         render24hChart(last24hData);
-        console.log(last24hData)
         render7dChart(last7DaysHourlyData);
-        console.log(last7DaysHourlyData)
     });
 
 function parseCSV(data) {
@@ -65,14 +63,6 @@ function filterLast7Days(data) {
             hourlyData[hour].count += 1;
         }
     });
-
-    console.log(hourlyData)
-
-    // console.log(Object.keys(hourlyData).map(hour => ({
-    //     datetime: new Date(parseInt(hour)),
-    //     avgTemp: hourlyData[hour].tempSum / hourlyData[hour].count,
-    //     avgRad: hourlyData[hour].radSum / hourlyData[hour].count
-    // })))
     
     return Object.keys(hourlyData).map(hour => ({
         datetime: new Date(parseInt(hour)),
@@ -132,7 +122,7 @@ function render24hChart(data) {
             data: data.map(entry => [entry.datetime.getTime(), entry.rainValue]),
             yAxis: 1,
             zIndex: 1,
-            color: '#17BEBB'
+            color: '#058DC7'
         }]
     });
 }
@@ -194,7 +184,7 @@ function render7dChart(data) {
             data: data.map(entry => [entry.datetime.getTime(), entry.totalRain]),
             yAxis: 1,
             zIndex: 1,
-            color: '#17BEBB'
+            color: '#058DC7'
         }, {
             name: 'Solar Radiation',
             data: data.map(entry => [entry.datetime.getTime(), entry.avgRad]),
@@ -205,5 +195,4 @@ function render7dChart(data) {
         ]
         
     });
-    ///console.log(data.map(entry => [entry.datetime.getTime(), entry.avgRad]))
 }
