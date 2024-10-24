@@ -5,41 +5,66 @@
   <title>leaflet-map-csv</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="utf-8">
-
-  <!-- Load Leaflet code library - see updates at http://leafletjs.com/download.html -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-
-  <!-- Load jQuery and PapaParse to read data from a CSV file -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
+  <script src="coastline.js"></script>
 
-  <!-- Position the map with Cascading Style Sheet (CSS) -->
+  <link
+  href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+  rel="stylesheet">
+
   <style>
     body {
-      margin: 0;
-      padding: 0;
+      background: #efefef;
+      color: #333;
+      font-family: "Roboto";
+      font-size: 1vw;
+      height: 100%;
     }
 
     #map {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      left: 0;
-      height: 75%;
-      width: 50%;
-      align-items: center;
+      height: 500px; 
+      width: 80%; 
+      position: relative; 
+      margin: 20px auto;
     }
   </style>
-
-
-
 </head>
 
 <body>
+  
 
-  <div id="map"></div>
+  <div style="left: 50%;
+  transform: translateX(-50%);
+  position: relative;
+  background: white;
+  padding: 50px;
+  padding-bottom: 80px;
+  width: 75%;
+  height: 80%;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.22);
+  border-radius: 5px;
+  min-width: 240px;">
+  <h1>Hawai&#699; i Mesonet Live Data Access</h1>
+  <div style = "margin: 20px auto">
+  <p>Select Island:</p>
+    <select id='zoombox' onchange="zoomToIsl()">
+      <option>Select island</option>
+
+      <option value="Hawaii">Hawai&#x02BB;i</option>
+      <option value="Kauai">Kaua&#x02BB;i</option>
+      <option value="Maui">Maui</option>
+      <option value="Molokai">Moloka&#x02BB;i</option>
+      <option value="Oahu">O&#x02BB;ahu</option>
+    </select>
+  </div>
+    <div id="map"></div>
+  </div>
+  <br>
+  <br>
+  
 
   <script>
     var map = L.map('map', {
@@ -47,7 +72,6 @@
       zoom: 7
     });
 
-    // Add the basemap
     var basemap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
       attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community',
       minZoom: 0,
@@ -57,20 +81,17 @@
 
     $.get('/data/station_metadata.csv', function (csvString) {
 
-      // Use PapaParse to convert string to array of objects
       var data = Papa.parse(csvString, { header: true, dynamicTyping: true }).data;
 
-      // For each row in data, create a marker and add it to the map
-      // For each row, columns `Latitude`, `Longitude`, and `Title` are required
       for (var i in data) {
         var row = data[i];
         var url = 'station.html?id=0' + row.id;
         var marker = L.circleMarker([row.lat, row.lng], {
-            color: "white",
-            fillColor: "blue",
-            fillOpacity: 0.5,
-            radius: 8,
-        }).bindPopup('<a href="'+ url +'" style="font-size: 20px" target="_blank">' + row.name + '</a>');
+          color: "white",
+          fillColor: "blue",
+          fillOpacity: 0.5,
+          radius: 8,
+        }).bindPopup('<a href="' + url + '" style="font-size: 20px" target="_blank">' + row.name + '</a>');
 
 
         marker.addTo(map);
@@ -78,11 +99,39 @@
 
     });
 
-    // Update map attribution
     map.attributionControl.setPrefix(
       'View <a href="https://github.com/HandsOnDataViz/leaflet-map-csv" target="_blank">code on GitHub</a>'
     );
+    var islands = L.geoJSON(coastline, {
+      color: 'none',
+    }
+    );
 
+    selectbox = document.getElementById('zoombox');
+
+    var featuremap = {};
+
+
+
+    for (var i = 0; i < coastline['features'].length; i++) {
+      feature = coastline['features'][i];
+      featuremap[feature['properties']['isle']] = feature['properties'];
+
+    }
+
+    function zoomToIsl() {
+      key = selectbox.value;
+      obj = featuremap[key];
+      isl = obj[Object.keys(obj)[0]];
+      if (isl == 'Hawaii') {
+        map.setView([obj['lat'], obj['lon']], 9);
+      } else if (isl == 'Lanai') {
+        map.setView([obj['lat'], obj['lon']], 11);
+      } else {
+        map.setView([obj['lat'], obj['lon']], 10);
+      }
+
+    }
 
   </script>
 </body>
