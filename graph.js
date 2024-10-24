@@ -195,9 +195,12 @@ function filterDataByRange(data, range, latestTimestamp) {
     let startTime;
 
     if (range === '24h') {
-        startTime = latestTimestamp - (24 * 60 * 60 * 1000);  // Subtract 24 hours in milliseconds
+        startTime = latestTimestamp - (24 * 60 * 60 * 1000);  
     } else if (range === '7d') {
-        startTime = latestTimestamp - (7 * 24 * 60 * 60 * 1000);  // Subtract 7 days in milliseconds
+        startTime = latestTimestamp - (7 * 24 * 60 * 60 * 1000);  
+    }
+    else if (range === '30d') {
+        startTime = latestTimestamp - (30 * 24 * 60 * 60 * 1000); 
     }
 
     return data.filter(row => {

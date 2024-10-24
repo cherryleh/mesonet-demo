@@ -103,7 +103,7 @@ function render24hChart(data) {
         yAxis: [{ // First yAxis for temperature
             title: { text: 'Temperature (&deg;F)' }
         }, { // Secondary yAxis for rainfall
-            title: { text: 'Rainfall (in)' },
+            title: { text: '5-min Rainfall (in)' },
             opposite: true
         }],
         tooltip: {
@@ -157,7 +157,7 @@ function render7dChart(data) {
         yAxis: [{ // First yAxis for temperature
             title: { text: 'Temperature (&deg;F)' }
         }, {
-            title: { text: 'Rainfall (in)' },
+            title: { text: 'Hourly Rainfall (in)' },
             opposite: true
         },
         {
