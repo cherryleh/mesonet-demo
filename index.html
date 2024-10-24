@@ -82,6 +82,7 @@
     $.get('/data/station_metadata.csv', function (csvString) {
 
       var data = Papa.parse(csvString, { header: true, dynamicTyping: true }).data;
+      console.log(data);
 
       for (var i in data) {
         var row = data[i];
@@ -92,8 +93,6 @@
           fillOpacity: 0.5,
           radius: 8,
         }).bindPopup('<a href="' + url + '" style="font-size: 20px" target="_blank">' + row.name + '</a>');
-
-
         marker.addTo(map);
       }
 
