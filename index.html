@@ -79,7 +79,7 @@
     });
     basemap.addTo(map);
 
-    $.get('/data/station_metadata.csv', function (csvString) {
+    $.get('data/station_metadata.csv', function (csvString) {
 
       var data = Papa.parse(csvString, { header: true, dynamicTyping: true }).data;
       console.log(data);

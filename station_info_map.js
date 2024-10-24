@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
         L.marker([lat,lon], {icon: greenIcon}).bindPopup(name).addTo(map);
     }
 
-    $.get('/data/station_metadata.csv', function (csvString) {
+    $.get('data/station_metadata.csv', function (csvString) {
 
         // Use PapaParse to convert string to array of objects
         var data = Papa.parse(csvString, { header: true, dynamicTyping: false }).data;
